@@ -1,17 +1,20 @@
 {
   "name": "xkcd-password",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A module (and commandline) for generating XKCD-style passwords.",
   "main": "index.js",
   "bin": {
     "xkcd-password": "./bin/xkcd-password"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt jshint test"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/fardog/node-xkcd-password.git"
+  },
+  "engines": {
+    "node": ">=0.10.22"
   },
   "keywords": [
     "password",
@@ -27,5 +30,15 @@
     "async": "^0.7.0",
     "debug": "^0.8.0",
     "nomnom": "^1.6.2"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.0",
+    "grunt-cli": "~0.1.13",
+    "underscore": "^1.6.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
   }
 }
