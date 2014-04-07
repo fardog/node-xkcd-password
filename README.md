@@ -1,4 +1,4 @@
-# Node XKCD Password Generator
+# XKCD Password Generator 0.1.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
