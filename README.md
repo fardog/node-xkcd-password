@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.1.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.1.1 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -38,6 +38,7 @@ Options:
    -x, --maxLength   Maximum length of words chosen for the generated password.  [8]
    -f, --wordFile    The newline-delimited list of words to be used as the source.
    -s, --separator   The separator character to use between words when output to the console.  [ ]
+   --version         print version and exit
 ```
 
 ### Module
@@ -51,6 +52,13 @@ pw.generate(numWords, minLength, maxLength, function(err, result) {
     // ['distome', 'pantries', 'sending', 'weiner']
 });
 ```
+
+## Contributing
+
+Feel free to send pull requests! I'm not picky, but would like the following:
+
+1. Write tests for any new features, and do not break existing tests.
+2. Be sure to point out any changes that break API.
 
 ## The MIT License (MIT)
 
