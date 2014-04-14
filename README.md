@@ -53,6 +53,10 @@ pw.generate(numWords, minLength, maxLength, function(err, result) {
 });
 ```
 
+## Known Bugs
+
+- Trying to generate more than 2400 words in a single `generate()` call may overflow the call stack. More than 2500 most certainly will (on my machine). This could be refactored or you could just not do that.
+
 ## Contributing
 
 Feel free to send pull requests! I'm not picky, but would like the following:
