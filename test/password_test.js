@@ -32,8 +32,8 @@ exports.xkcdpass = {
     var minLength = 8;
 
     pw.generate(numWords, maxLength, minLength, function(err, result1) {
-      pw.generate(numWords, maxLength, minLength, function(err, result2) {
         test.equal(4, result1.length, 'should see four generated words from result1');
+      pw.generate(numWords, maxLength, minLength, function(err, result2) {
         test.equal(4, result2.length, 'should see four generated words from result2');
 
         // tests if there's overlap in the two generated arrays, which is 
