@@ -1,6 +1,6 @@
 {
   "name": "xkcd-password",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A module (and commandline) for generating XKCD-style passwords.",
   "main": "index.js",
   "bin": {
@@ -32,13 +32,13 @@
     "nomnom": "^1.6.2"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.6.4",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.0",
-    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "^0.4.4",
+    "grunt-cli": "^0.1.13",
     "underscore": "^1.6.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.0"
+    "grunt": "^0.4.4"
   }
 }

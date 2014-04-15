@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.1.1 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.2.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -47,11 +47,21 @@ Options:
 var xkcdPassword = require('xkcd-password');
 var pw = new xkcdPassword();
 
-pw.generate(numWords, minLength, maxLength, function(err, result) {
+var options = {
+    numWords: 4,
+    minLength: 5,
+    maxLength: 8
+};
+
+pw.generate(options, function(err, result) {
     console.log(result);
     // ['distome', 'pantries', 'sending', 'weiner']
 });
 ```
+
+## Known Bugs
+
+- Trying to generate more than 2400 words in a single `generate()` call may overflow the call stack. More than 2500 most certainly will (on my machine). This could be refactored or you could just not do that.
 
 ## Contributing
 
@@ -59,6 +69,11 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 
 1. Write tests for any new features, and do not break existing tests.
 2. Be sure to point out any changes that break API.
+
+## History
+
+- **v0.2.0**  
+Changes generation function to accept an "options" object rather than discrete parameters to the generate function. Provides defaults if options aren't given.
 
 ## The MIT License (MIT)
 
