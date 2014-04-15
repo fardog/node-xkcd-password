@@ -13,11 +13,13 @@ exports.xkcdpass = {
     test.expect(1);
 
     var pw = new xkcdPassword();
-    var numWords = 4;
-    var maxLength = 5;
-    var minLength = 8;
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
 
-    pw.generate(numWords, maxLength, minLength, function(err, result) {
+    pw.generate(options, function(err, result) {
       test.equal(4, result.length, 'should see four generated words');
       test.done();
     });
@@ -27,13 +29,15 @@ exports.xkcdpass = {
     test.expect(3);
 
     var pw = new xkcdPassword();
-    var numWords = 4;
-    var maxLength = 5;
-    var minLength = 8;
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
 
-    pw.generate(numWords, maxLength, minLength, function(err, result1) {
+    pw.generate(options, function(err, result1) {
         test.equal(4, result1.length, 'should see four generated words from result1');
-      pw.generate(numWords, maxLength, minLength, function(err, result2) {
+      pw.generate(options, function(err, result2) {
         test.equal(4, result2.length, 'should see four generated words from result2');
 
         // tests if there's overlap in the two generated arrays, which is 
@@ -49,25 +53,27 @@ exports.xkcdpass = {
     test.expect(4);
 
     var pw = new xkcdPassword();
-    var numWords = 4;
-    var maxLength = 5;
-    var minLength = 8;
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
 
     async.parallel([
       function(callback) {
-        pw.generate(numWords, maxLength, minLength, function(err, result) {
+        pw.generate(options, function(err, result) {
           callback(null, result);
         });
       },
       function(callback) {
-        pw.generate(numWords, maxLength, minLength, function(err, result) {
+        pw.generate(options, function(err, result) {
           callback(null, result);
         });
       }
     ], function(err, results) {
       test.equal(2, results.length, 'should see two results');
-      test.equal(numWords, results[0].length, 'should see four generated words from result[0]');
-      test.equal(numWords, results[1].length, 'should see four generated words from result[1]');
+      test.equal(options.numWords, results[0].length, 'should see four generated words from result[0]');
+      test.equal(options.numWords, results[1].length, 'should see four generated words from result[1]');
 
       var difference = _.difference(results[0], results[1]);
       test.ok(difference.length > 0, difference, 'should not have the same values in both arrays.');
@@ -93,9 +99,14 @@ exports.xkcdpass = {
       'three',
       'four',
     ];
+    var options = {
+      numWords: 4,
+      minLength: 1,
+      maxLength: 10
+    };
 
     var pw = new xkcdPassword().initWithWordList(wordlist);
-    pw.generate(4, 1, 10, function(err, result) {
+    pw.generate(options, function(err, result) {
       var difference = _.difference(wordlist, result);
       test.ok(difference.length === 0, 'should use all words from wordlist');
       test.done();
@@ -110,12 +121,26 @@ exports.xkcdpass = {
       'three',
       'four',
     ];
+    var options = {
+      numWords: 4,
+      minLength: 1,
+      maxLength: 10
+    };
     var wordfile = path.join(__dirname, 'fixtures/wordlist.txt');
 
     var pw = new xkcdPassword().initWithWordFile(wordfile);
-    pw.generate(4, 1, 10, function(err, result) {
+    pw.generate(options, function(err, result) {
       var difference = _.difference(wordlist, result);
       test.ok(difference.length === 0, 'should use local wordfile');
+      test.done();
+    });
+  },
+  chooseSaneDefaults: function(test) {
+    test.expect(1);
+    
+    var pw = new xkcdPassword();
+    pw.generate(function (err, result) {
+      test.equal(4, result.length, 'should generate four words by default');
       test.done();
     });
   }
