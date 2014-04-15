@@ -73,7 +73,7 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 ## History
 
 - **v0.2.0**  
-Changes generation function to accept an "options" object rather than discreet parameters to the generate function. Provides defaults if options aren't given.
+Changes generation function to accept an "options" object rather than discrete parameters to the generate function. Provides defaults if options aren't given.
 
 ## The MIT License (MIT)
 
