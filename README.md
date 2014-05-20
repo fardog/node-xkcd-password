@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.2.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.2.1 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -71,6 +71,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v0.2.1**
+Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
 
 - **v0.2.0**  
 Changes generation function to accept an "options" object rather than discrete parameters to the generate function. Provides defaults if options aren't given.
