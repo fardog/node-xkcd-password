@@ -59,6 +59,16 @@ pw.generate(options, function(err, result) {
 });
 ```
 
+## Environment Variables
+
+The random number generator that's internal to `xkcd-password` accepts two environment variables that affect its operation:
+
+- **RAND_ALLOW_PRNG**
+Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
+
+- **RAND_BUFFER_SIZE**
+How many bytes of entropy we create in a single go. Internally, we create a buffer of entropy and then use it until it's exhausted, then refill the buffer. A small buffer exhausts more quickly, but generates faster and uses less memory. Default is 512 bytes. This value cannot be less than 256 bytes.
+
 ## Known Bugs
 
 - Trying to generate more than 2400 words in a single `generate()` call may overflow the call stack. More than 2500 most certainly will (on my machine). This could be refactored or you could just not do that.
