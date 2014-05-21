@@ -2,7 +2,7 @@
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
-**Warning:** I am not a cryptographer, or any sort of password expert. Use at your own risk.
+> **Warning:** I am not a cryptographer, or any sort of password expert. An audit would be greatly appreciated.
 
 ## Installation
 
