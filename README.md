@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.2.1 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.2.2 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -61,7 +61,7 @@ pw.generate(options, function(err, result) {
 
 ## Environment Variables
 
-The random number generator that's internal to `xkcd-password` accepts two environment variables that affect its operation:
+Internally, we use [random-lib](http://www.npmjs.org/packages/random-lib/) for our random number generator, which uses the following environment variables:
 
 - **RAND_ALLOW_PRNG**
 Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
@@ -71,7 +71,7 @@ How many bytes of entropy we create in a single go. Internally, we create a buff
 
 ## Known Bugs
 
-- Trying to generate more than 2400 words in a single `generate()` call may overflow the call stack. More than 2500 most certainly will (on my machine). This could be refactored or you could just not do that.
+- Trying to generate more a large number of words in a single `generate()` call may overflow the call stack. You'll usually be fine up to 2500 words though so it's not much of a problem.
 
 ## Contributing
 
@@ -81,6 +81,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v0.2.2**
+Now uses my [random-lib](http://www.npmjs.org/packages/random-lib/) wrapper for `crypto.randomBytes()`.
 
 - **v0.2.1**
 Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
