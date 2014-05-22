@@ -61,7 +61,7 @@ pw.generate(options, function(err, result) {
 
 ## Environment Variables
 
-Internally, we use [random-lib](http://www.npmjs.org/packages/random-lib/) for our random number generator, which uses the following environment variables:
+Internally, we use [random-lib](http://www.npmjs.org/package/random-lib/) for our random number generator, which uses the following environment variables:
 
 - **RAND_ALLOW_PRNG**
 Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
@@ -83,7 +83,7 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 ## History
 
 - **v0.2.2**
-Now uses my [random-lib](http://www.npmjs.org/packages/random-lib/) wrapper for `crypto.randomBytes()`.
+Now uses my [random-lib](http://www.npmjs.org/package/random-lib/) wrapper for `crypto.randomBytes()`.
 
 - **v0.2.1**
 Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
