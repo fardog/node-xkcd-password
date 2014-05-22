@@ -48,6 +48,39 @@ exports.xkcdpass = {
       });
     });
   },
+  // ensures we don't have any problems that only crop up rarely
+  generateOneHundredRuns: function(test) {
+    test.expect(2101);
+    
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 10,
+      minLength: 6,
+      maxLength: 10
+    };
+    
+    var count = 0;
+    async.doWhilst(function(callback) {
+      pw.generate(options, function(err, result) {
+        test.equal(options.numWords, result.length, 'should get numWords words');
+        for (var i = 0; i < result.length; i++) {
+          test.equal(true, result[i].length <= options.maxLength, 'word should be shorter than the max length');
+          test.equal(true, result[i].length >= options.minLength, 'word should be longer than the min length');
+        }
+        
+        count++;
+        callback();
+      });
+    },
+    function() { return count < 100; },
+    function(err) {
+      if (err) {
+        throw(err);
+      }
+      test.equal(100, count, 'should have run 100 times');
+      test.done();
+    });
+  },
   // tests generating two asynchronous runs of the generator
   generateAsync: function(test) {
     test.expect(4);

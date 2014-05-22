@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.2.2 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.2.3 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -61,7 +61,7 @@ pw.generate(options, function(err, result) {
 
 ## Environment Variables
 
-Internally, we use [random-lib](http://www.npmjs.org/package/random-lib/) for our random number generator, which uses the following environment variables:
+Internally, we use [random-lib][randomlib] for our random number generator, which uses the following environment variables:
 
 - **RAND_ALLOW_PRNG**
 Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
@@ -82,14 +82,19 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 
 ## History
 
+- **v0.2.3**
+Smarter rewrite of word generation function based on additional functionality that [random-lib][randomlib] provides. Additional tests.
+
 - **v0.2.2**
-Now uses my [random-lib](http://www.npmjs.org/package/random-lib/) wrapper for `crypto.randomBytes()`.
+Now uses my [random-lib][randomlib] wrapper for `crypto.randomBytes()`.
 
 - **v0.2.1**
 Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
 
 - **v0.2.0**  
 Changes generation function to accept an "options" object rather than discrete parameters to the generate function. Provides defaults if options aren't given.
+
+[randomlib]: http://www.npmjs.org/package/random-lib/
 
 ## The MIT License (MIT)
 
