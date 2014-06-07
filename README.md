@@ -82,13 +82,16 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 
 ## History
 
-- **v0.2.3**
+- **v0.2.4**  
+Avoids [releasing Zalgo](http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony) on errors.
+
+- **v0.2.3**  
 Smarter rewrite of word generation function based on additional functionality that [random-lib][randomlib] provides. Additional tests.
 
-- **v0.2.2**
+- **v0.2.2**  
 Now uses my [random-lib][randomlib] wrapper for `crypto.randomBytes()`.
 
-- **v0.2.1**
+- **v0.2.1**  
 Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
 
 - **v0.2.0**  

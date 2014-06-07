@@ -1,6 +1,6 @@
 {
   "name": "xkcd-password",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A module (and commandline) for generating XKCD-style passwords.",
   "main": "index.js",
   "bin": {
@@ -29,7 +29,7 @@
   "dependencies": {
     "async": "^0.7.0",
     "debug": "^0.8.0",
-    "nomnom": "^1.6.2",
+    "nomnom": "^1.7.0",
     "random-lib": "^0.1.1"
   },
   "devDependencies": {
