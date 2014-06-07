@@ -114,13 +114,16 @@ exports.xkcdpass = {
     });
   },
   useBadWordList: function(test) {
-    test.expect(1);
+    test.expect(2);
 
     var wordlist = "something";
 
     test.throws(function() {
       var pw = new xkcdPassword().initWithWordList(wordlist);
     }, Error, 'should error on a bad wordlist');
+    test.throws(function() {
+      var pw = new xkcdPassword().initWithWordFile([]);
+    }, Error, 'should error on a bad wordfile');
     test.done();
   },
   testErrors: function(test) {
