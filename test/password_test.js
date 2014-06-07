@@ -124,6 +124,7 @@ exports.xkcdpass = {
     test.throws(function() {
       var pw = new xkcdPassword().initWithWordFile([]);
     }, Error, 'should error on a bad wordfile');
+
     test.done();
   },
   testErrors: function(test) {
