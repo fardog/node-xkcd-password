@@ -123,6 +123,33 @@ exports.xkcdpass = {
     }, Error, 'should error on a bad wordlist');
     test.done();
   },
+  testErrors: function(test) {
+    test.expect(4);
+
+    var wordList = [
+      'one',
+      'two',
+      'three'
+    ];
+    
+    var pw = new xkcdPassword().initWithWordList(wordList);
+    pw.generate({numWords: 4}, function(err, result) {
+      test.ok(err, 'should see an error message on asking for too many words.');
+
+      pw.generate({numWords: 0}, function(err, result) {
+        test.ok(err, 'should see an error on asking for no words.');
+
+        pw.generate({numWords: 4, minLength: -1}, function(err, result) {
+          test.ok(err, 'should see an error on asking for a negative length');
+
+          pw.generate({numWords: 4, maxLength: 1}, function(err, result) {
+            test.ok(err, 'should see an error on a very small max length');
+            test.done();
+          });
+        });
+      });
+    });
+  },
   generateFromList: function(test) {
     test.expect(1);
 
