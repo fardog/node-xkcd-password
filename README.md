@@ -1,4 +1,4 @@
-# XKCD Password Generator 0.2.4 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 0.2.5 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
 
@@ -54,8 +54,7 @@ var options = {
 };
 
 pw.generate(options, function(err, result) {
-    console.log(result);
-    // ['distome', 'pantries', 'sending', 'weiner']
+    console.log(result); // ['distome', 'pantries', 'sending', 'weiner']
 });
 ```
 
@@ -72,6 +71,9 @@ How many bytes of entropy we create in a single go. Internally, we create a buff
 ## Known Bugs
 
 - Trying to generate more a large number of words in a single `generate()` call may overflow the call stack. You'll usually be fine up to 2500 words though so it's not much of a problem.
+- Due to an oddity in how [nomnom][nomnom] handles certain characters, you need to use the long form of the separator option when using some characters on the command line, e.g. `xkcd-password --separator='-'` for dash separators.
+
+[nomnom]: https://github.com/harthur/nomnom
 
 ## Contributing
 
@@ -81,6 +83,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v0.2.5**  
+Additional tests.
 
 - **v0.2.4**  
 Avoids [releasing Zalgo](http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony) on errors.
