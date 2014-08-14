@@ -24,6 +24,21 @@ exports.xkcdpass = {
       test.done();
     });
   },
+  promiseGeneratePassword: function(test) {
+    test.expect(1);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
+
+    pw.generate(options).then(function(result) {
+      test.equal(4, result.length, 'should see four generated words');
+      test.done();
+    });
+  },
   // tests running two consecutive generations
   generateTwoRuns: function(test) {
     test.expect(3);
@@ -38,6 +53,29 @@ exports.xkcdpass = {
     pw.generate(options, function(err, result1) {
         test.equal(4, result1.length, 'should see four generated words from result1');
       pw.generate(options, function(err, result2) {
+        test.equal(4, result2.length, 'should see four generated words from result2');
+
+        // tests if there's overlap in the two generated arrays, which is 
+        // not probable
+        var difference = _.difference(result1, result2);
+        test.ok(difference.length > 0, difference, 'should not have the same values in both arrays.');
+        test.done();
+      });
+    });
+  },
+  promiseGenerateTwoRuns: function(test) {
+    test.expect(3);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
+
+    pw.generate(options).then(function(result1) {
+        test.equal(4, result1.length, 'should see four generated words from result1');
+      pw.generate(options).then(function(result2) {
         test.equal(4, result2.length, 'should see four generated words from result2');
 
         // tests if there's overlap in the two generated arrays, which is 
@@ -113,6 +151,37 @@ exports.xkcdpass = {
       test.done();
     });
   },
+  promiseGenerateAsync: function(test) {
+    test.expect(4);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 4,
+      minLength: 5,
+      maxLength: 8
+    };
+
+    async.parallel([
+      function(callback) {
+        pw.generate(options).then(function(result) {
+          callback(null, result);
+        });
+      },
+      function(callback) {
+        pw.generate(options).then(function(result) {
+          callback(null, result);
+        });
+      }
+    ], function(err, results) {
+      test.equal(2, results.length, 'should see two results');
+      test.equal(options.numWords, results[0].length, 'should see four generated words from result[0]');
+      test.equal(options.numWords, results[1].length, 'should see four generated words from result[1]');
+
+      var difference = _.difference(results[0], results[1]);
+      test.ok(difference.length > 0, difference, 'should not have the same values in both arrays.');
+      test.done();
+    });
+  },
   useBadWordList: function(test) {
     test.expect(2);
 
@@ -147,6 +216,33 @@ exports.xkcdpass = {
           test.ok(err, 'should see an error on asking for a negative length');
 
           pw.generate({numWords: 4, maxLength: 1}, function(err, result) {
+            test.ok(err, 'should see an error on a very small max length');
+            test.done();
+          });
+        });
+      });
+    });
+  },
+  promiseTestErrors: function(test) {
+    test.expect(4);
+
+    var wordList = [
+      'one',
+      'two',
+      'three'
+    ];
+    
+    var pw = new xkcdPassword().initWithWordList(wordList);
+    pw.generate({numWords: 4}).catch(function(err) {
+      test.ok(err, 'should see an error message on asking for too many words.');
+
+      pw.generate({numWords: 0}).catch(function(err) {
+        test.ok(err, 'should see an error on asking for no words.');
+
+        pw.generate({numWords: 4, minLength: -1}).catch(function(err) {
+          test.ok(err, 'should see an error on asking for a negative length');
+
+          pw.generate({numWords: 4, maxLength: 1}).catch(function(err) {
             test.ok(err, 'should see an error on a very small max length');
             test.done();
           });
@@ -204,6 +300,15 @@ exports.xkcdpass = {
     
     var pw = new xkcdPassword();
     pw.generate(function (err, result) {
+      test.equal(4, result.length, 'should generate four words by default');
+      test.done();
+    });
+  },
+  promiseChooseSaneDefaults: function(test) {
+    test.expect(1);
+    
+    var pw = new xkcdPassword();
+    pw.generate().then(function(result) {
       test.equal(4, result.length, 'should generate four words by default');
       test.done();
     });

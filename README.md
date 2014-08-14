@@ -1,6 +1,6 @@
-# XKCD Password Generator 0.2.7 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 1.0.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
-Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
+Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist. Supports both a callback-based API and [Promises/A+](http://promisesaplus.com/).
 
 > **Warning:** I am not a cryptographer, or any sort of password expert. An audit would be greatly appreciated.
 
@@ -48,13 +48,24 @@ var xkcdPassword = require('xkcd-password');
 var pw = new xkcdPassword();
 
 var options = {
-    numWords: 4,
-    minLength: 5,
-    maxLength: 8
+  numWords: 4,
+  minLength: 5,
+  maxLength: 8
 };
 
+// using callbacks
 pw.generate(options, function(err, result) {
-    console.log(result); // ['distome', 'pantries', 'sending', 'weiner']
+  console.log(result); // ['distome', 'pantries', 'sending', 'weiner']
+});
+
+
+// or, with promises
+pw.generate(options).then(function(result) {
+  console.log(result); // [ 'crambo', 'piled', 'procural', 'plunk' ]
+}).catch(function(err) {
+  if (!err) {
+    console.log('No errors here!');
+  }
 });
 ```
 
@@ -83,6 +94,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v1.0.0**  
+API now supports Promises as well as callbacks.
 
 - **v0.2.7**  
 Updates to the latest version of [random-lib][randomlib] and debug.

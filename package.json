@@ -1,6 +1,6 @@
 {
   "name": "xkcd-password",
-  "version": "0.2.7",
+  "version": "1.0.0",
   "description": "A module (and commandline) for generating XKCD-style passwords.",
   "main": "index.js",
   "bin": {
@@ -18,7 +18,9 @@
   },
   "keywords": [
     "password",
-    "xkcd"
+    "xkcd",
+		"words",
+		"random"
   ],
   "author": "Nathan Wittstock <code@fardogllc.com>",
   "license": "MIT",
@@ -34,10 +36,10 @@
     "when": "^3.4.4"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-nodeunit": "^0.3.3",
     "grunt": "^0.4.4",
     "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
     "underscore": "^1.6.0"
   }
 }
