@@ -18,7 +18,9 @@
   },
   "keywords": [
     "password",
-    "xkcd"
+    "xkcd",
+		"words",
+		"random"
   ],
   "author": "Nathan Wittstock <code@fardogllc.com>",
   "license": "MIT",
