@@ -119,6 +119,47 @@ exports.xkcdpass = {
       test.done();
     });
   },
+  // generates too many small words, to ensure we don't hang on generation
+  generateTooManyWords: function(test) {
+    test.expect(2);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 86,
+      minLength: 2,
+      maxLength: 2
+    };
+
+    pw.generate(options, function(err, result) {
+      test.ok(err, 'should see an error');
+
+      options = {
+        numWords: 1000,
+        minLength: 3,
+        maxLength: 3
+      };
+      pw.generate(options, function(err, result) {
+        test.ok(err, 'should see an error');
+        test.done();
+      });
+    });
+  },
+  // generates exactly enough words to see if we trip the too many words error falsely
+  generateExactlyEnoughWords: function(test) {
+    test.expect(1);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 85,
+      minLength: 2,
+      maxLength: 2
+    };
+
+    pw.generate(options, function(err, result) {
+      test.equal(85, result.length, 'should see 85 words');
+      test.done();
+    });
+  },
   // tests generating two asynchronous runs of the generator
   generateAsync: function(test) {
     test.expect(4);
