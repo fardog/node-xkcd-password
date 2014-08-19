@@ -238,7 +238,7 @@ exports.xkcdpass = {
     test.done();
   },
   testErrors: function(test) {
-    test.expect(4);
+    test.expect(5);
 
     var wordList = [
       'one',
@@ -258,14 +258,18 @@ exports.xkcdpass = {
 
           pw.generate({numWords: 4, maxLength: 1}, function(err, result) {
             test.ok(err, 'should see an error on a very small max length');
-            test.done();
+            
+            pw.generate({minLength: 10, maxLength: 9}, function(err, result) {
+              test.ok(err, 'should see an error when max is less than min');
+              test.done();
+            });
           });
         });
       });
     });
   },
   promiseTestErrors: function(test) {
-    test.expect(4);
+    test.expect(5);
 
     var wordList = [
       'one',
@@ -285,7 +289,11 @@ exports.xkcdpass = {
 
           pw.generate({numWords: 4, maxLength: 1}).catch(function(err) {
             test.ok(err, 'should see an error on a very small max length');
-            test.done();
+
+            pw.generate({minLength: 10, maxLength: 9}).catch(function(err) {
+              test.ok(err, 'should see an error when max is less than min');
+              test.done();
+            });
           });
         });
       });
