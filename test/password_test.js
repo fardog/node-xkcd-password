@@ -119,6 +119,47 @@ exports.xkcdpass = {
       test.done();
     });
   },
+  // generates too many small words, to ensure we don't hang on generation
+  generateTooManyWords: function(test) {
+    test.expect(2);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 86,
+      minLength: 2,
+      maxLength: 2
+    };
+
+    pw.generate(options, function(err, result) {
+      test.ok(err, 'should see an error');
+
+      options = {
+        numWords: 1000,
+        minLength: 3,
+        maxLength: 3
+      };
+      pw.generate(options, function(err, result) {
+        test.ok(err, 'should see an error');
+        test.done();
+      });
+    });
+  },
+  // generates exactly enough words to see if we trip the too many words error falsely
+  generateExactlyEnoughWords: function(test) {
+    test.expect(1);
+
+    var pw = new xkcdPassword();
+    var options = {
+      numWords: 85,
+      minLength: 2,
+      maxLength: 2
+    };
+
+    pw.generate(options, function(err, result) {
+      test.equal(85, result.length, 'should see 85 words');
+      test.done();
+    });
+  },
   // tests generating two asynchronous runs of the generator
   generateAsync: function(test) {
     test.expect(4);
@@ -197,7 +238,7 @@ exports.xkcdpass = {
     test.done();
   },
   testErrors: function(test) {
-    test.expect(4);
+    test.expect(5);
 
     var wordList = [
       'one',
@@ -217,14 +258,18 @@ exports.xkcdpass = {
 
           pw.generate({numWords: 4, maxLength: 1}, function(err, result) {
             test.ok(err, 'should see an error on a very small max length');
-            test.done();
+            
+            pw.generate({minLength: 10, maxLength: 9}, function(err, result) {
+              test.ok(err, 'should see an error when max is less than min');
+              test.done();
+            });
           });
         });
       });
     });
   },
   promiseTestErrors: function(test) {
-    test.expect(4);
+    test.expect(5);
 
     var wordList = [
       'one',
@@ -244,7 +289,11 @@ exports.xkcdpass = {
 
           pw.generate({numWords: 4, maxLength: 1}).catch(function(err) {
             test.ok(err, 'should see an error on a very small max length');
-            test.done();
+
+            pw.generate({minLength: 10, maxLength: 9}).catch(function(err) {
+              test.ok(err, 'should see an error when max is less than min');
+              test.done();
+            });
           });
         });
       });
