@@ -1,4 +1,4 @@
-# XKCD Password Generator 1.0.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator 1.1.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist. Supports both a callback-based API and [Promises/A+](http://promisesaplus.com/).
 
@@ -71,12 +71,15 @@ pw.generate(options).then(function(result) {
 
 ## Environment Variables
 
-Internally, we use [random-lib][randomlib] for our random number generator, which uses the following environment variables:
+- **DISABLE_LOOP_PREVENTION**  
+It's possible for you to ask for a very specific list of words—say, 100 two character passwords—which would fail if you didn't have enough words of that size, but your wordlist was big enough—say 1000 words. As such, loop prevention was added in v1.1.0. If you'd like to disable this prevention, set DISABLE_LOOP_PREVENTION to a truth-y value.
 
-- **RAND_ALLOW_PRNG**
+*Internally, we use [random-lib][randomlib] for our random number generator, which uses the following environment variables:*
+
+- **RAND_ALLOW_PRNG**  
 Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
 
-- **RAND_BUFFER_SIZE**
+- **RAND_BUFFER_SIZE**  
 How many bytes of entropy we create in a single go. Internally, we create a buffer of entropy and then use it until it's exhausted, then refill the buffer. A small buffer exhausts more quickly, but generates faster and uses less memory. Default is 512 bytes. This value cannot be less than 256 bytes.
 
 ## Known Bugs
@@ -94,6 +97,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v1.1.0**  
+Doesn't use promises unless you haven't specified a callback. Prevents the generator from entering an infinite loop. Adds additional checks on minimum and maximum word length options.
 
 - **v1.0.0**  
 API now supports Promises as well as callbacks.

@@ -1,6 +1,6 @@
 {
   "name": "xkcd-password",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A module (and commandline) for generating XKCD-style passwords.",
   "main": "index.js",
   "bin": {
