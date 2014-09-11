@@ -1,7 +1,7 @@
 {
   "name": "xkcd-password",
-  "version": "1.1.0",
-  "description": "A module (and commandline) for generating XKCD-style passwords.",
+  "version": "1.1.1",
+  "description": "Creates an XKCD-style password based on your parameters. Includes a CLI (xkcd-password) for your convenience, and a default wordlist. Supports both a callback-based API and Promises/A+.",
   "main": "index.js",
   "bin": {
     "xkcd-password": "./bin/xkcd-password"
@@ -19,8 +19,8 @@
   "keywords": [
     "password",
     "xkcd",
-		"words",
-		"random"
+    "words",
+    "random"
   ],
   "author": "Nathan Wittstock <code@fardogllc.com>",
   "license": "MIT",
@@ -30,10 +30,10 @@
   "homepage": "https://github.com/fardog/node-xkcd-password",
   "dependencies": {
     "async": "^0.9.0",
-    "debug": "^1.0.4",
+    "debug": "^2.0.0",
     "nomnom": "^1.8.0",
-    "random-lib": "^1.0.0",
-    "when": "^3.4.4"
+    "random-lib": "^1.1.2",
+    "when": "^3.4.5"
   },
   "devDependencies": {
     "grunt": "^0.4.4",

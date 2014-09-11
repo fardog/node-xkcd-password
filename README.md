@@ -1,4 +1,6 @@
-# XKCD Password Generator 1.1.0 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password)
+# XKCD Password Generator v1.1.1 
+
+[![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password) [![Dependency Status](https://gemnasium.com/fardog/node-xkcd-password.svg)](https://gemnasium.com/fardog/node-xkcd-password)
 
 Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist. Supports both a callback-based API and [Promises/A+](http://promisesaplus.com/).
 
@@ -97,6 +99,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v1.1.1**  
+Updates dependencies and internal documentation. Adds dependency badge.
 
 - **v1.1.0**  
 Doesn't use promises unless you haven't specified a callback. Prevents the generator from entering an infinite loop. Adds additional checks on minimum and maximum word length options.
