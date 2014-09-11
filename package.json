@@ -30,8 +30,9 @@
   "homepage": "https://github.com/fardog/node-xkcd-password",
   "dependencies": {
     "async": "^0.9.0",
+    "chalk": "^0.5.1",
     "debug": "^2.0.0",
-    "nomnom": "^1.8.0",
+    "minimist": "^1.1.0",
     "random-lib": "^1.1.2",
     "when": "^3.4.5"
   },
