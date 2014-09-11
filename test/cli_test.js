@@ -75,5 +75,15 @@ exports.xkcdcli = {
     cli = new Cli().parse(argv);
     test.ok(cli.message.length > 150, 'should have long help message');
     test.done();
+  },
+  syncCallbackStyle: function(test) {
+    test.expect(2);
+
+    var argv = ['-x', '5'];
+    var cli = new Cli().parse(argv, function(err, message, options) {
+      test.equal(5, options.maxLength, 'should have correct maxLength');
+      test.ok(!err, 'should not have an error');
+      test.done();
+    });
   }
 };
