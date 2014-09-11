@@ -1,4 +1,4 @@
-# XKCD Password Generator v1.1.1 
+# XKCD Password Generator v1.2.0 
 
 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password) [![Dependency Status](https://gemnasium.com/fardog/node-xkcd-password.svg)](https://gemnasium.com/fardog/node-xkcd-password)
 
@@ -84,12 +84,13 @@ Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBy
 - **RAND_BUFFER_SIZE**  
 How many bytes of entropy we create in a single go. Internally, we create a buffer of entropy and then use it until it's exhausted, then refill the buffer. A small buffer exhausts more quickly, but generates faster and uses less memory. Default is 512 bytes. This value cannot be less than 256 bytes.
 
+## Notes
+
+- The CLI will set the minimum word length to 1 if the maximum word length requested is below the default minimum word length (5), and the minimum is not set. This is as of version 1.2.0. This is to simplify asking for very small words from the CLI. This does not apply to using the module in your applications, just the CLI.
+
 ## Known Bugs
 
 - Trying to generate more a large number of words in a single `generate()` call may overflow the call stack. You'll usually be fine up to 2500 words though so it's not much of a problem.
-- Due to an oddity in how [nomnom][nomnom] handles certain characters, you need to use the long form of the separator option when using some characters on the command line, e.g. `xkcd-password --separator='-'` for dash separators.
-
-[nomnom]: https://github.com/harthur/nomnom
 
 ## Contributing
 
@@ -99,6 +100,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v1.2.0**  
+Replaces [nomnom][nomnom] with [minimist][minimist], and adds a custom validator for CLI options.
 
 - **v1.1.1**  
 Updates dependencies and internal documentation. Adds dependency badge.
@@ -135,6 +139,8 @@ Changes generation function to accept an "options" object rather than discrete p
 
 [async]: http://github.com/caolan/async/
 [randomlib]: http://www.npmjs.org/package/random-lib/
+[nomnom]: https://www.npmjs.org/package/nomnom
+[minimist]: https://www.npmjs.org/package/minimist
 
 ## The MIT License (MIT)
 
