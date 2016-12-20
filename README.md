@@ -1,4 +1,4 @@
-# XKCD Password Generator v2.0.0 
+# XKCD Password Generator v2.0.0
 
 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password) [![Dependency Status](https://gemnasium.com/fardog/node-xkcd-password.svg)](https://gemnasium.com/fardog/node-xkcd-password)
 
@@ -100,6 +100,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 2. Be sure to point out any changes that break API.
 
 ## History
+
+- **v2.0.0**  
+Update all dependancies and require nodejs 4 and above.
 
 - **v1.2.0**  
 Replaces [nomnom][nomnom] with [minimist][minimist], and adds a custom validator for CLI options.
