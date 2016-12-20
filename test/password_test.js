@@ -2,17 +2,16 @@
 
 var grunt = require('grunt');
 var _ = require('underscore');
-var xkcdPassword = require('../lib');
+var XKCDPassword = require('../lib');
 var async = require('async');
 var path = require('path');
-
 
 exports.xkcdpass = {
   // tests generating four words
   generatePassword: function(test) {
     test.expect(1);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -27,7 +26,7 @@ exports.xkcdpass = {
   promiseGeneratePassword: function(test) {
     test.expect(1);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -43,7 +42,7 @@ exports.xkcdpass = {
   generateTwoRuns: function(test) {
     test.expect(3);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -55,7 +54,7 @@ exports.xkcdpass = {
       pw.generate(options, function(err, result2) {
         test.equal(4, result2.length, 'should see four generated words from result2');
 
-        // tests if there's overlap in the two generated arrays, which is 
+        // tests if there's overlap in the two generated arrays, which is
         // not probable
         var difference = _.difference(result1, result2);
         test.ok(difference.length > 0, difference, 'should not have the same values in both arrays.');
@@ -66,7 +65,7 @@ exports.xkcdpass = {
   promiseGenerateTwoRuns: function(test) {
     test.expect(3);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -78,7 +77,7 @@ exports.xkcdpass = {
       pw.generate(options).then(function(result2) {
         test.equal(4, result2.length, 'should see four generated words from result2');
 
-        // tests if there's overlap in the two generated arrays, which is 
+        // tests if there's overlap in the two generated arrays, which is
         // not probable
         var difference = _.difference(result1, result2);
         test.ok(difference.length > 0, difference, 'should not have the same values in both arrays.');
@@ -89,14 +88,14 @@ exports.xkcdpass = {
   // ensures we don't have any problems that only crop up rarely
   generateOneHundredRuns: function(test) {
     test.expect(2101);
-    
-    var pw = new xkcdPassword();
+
+    var pw = new XKCDPassword();
     var options = {
       numWords: 10,
       minLength: 6,
       maxLength: 10
     };
-    
+
     var count = 0;
     async.doWhilst(function(callback) {
       pw.generate(options, function(err, result) {
@@ -105,7 +104,7 @@ exports.xkcdpass = {
           test.equal(true, result[i].length <= options.maxLength, 'word should be shorter than the max length');
           test.equal(true, result[i].length >= options.minLength, 'word should be longer than the min length');
         }
-        
+
         count++;
         callback();
       });
@@ -123,7 +122,7 @@ exports.xkcdpass = {
   generateTooManyWords: function(test) {
     test.expect(2);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 86,
       minLength: 2,
@@ -148,7 +147,7 @@ exports.xkcdpass = {
   generateExactlyEnoughWords: function(test) {
     test.expect(1);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 85,
       minLength: 2,
@@ -164,7 +163,7 @@ exports.xkcdpass = {
   generateAsync: function(test) {
     test.expect(4);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -195,7 +194,7 @@ exports.xkcdpass = {
   promiseGenerateAsync: function(test) {
     test.expect(4);
 
-    var pw = new xkcdPassword();
+    var pw = new XKCDPassword();
     var options = {
       numWords: 4,
       minLength: 5,
@@ -229,10 +228,10 @@ exports.xkcdpass = {
     var wordlist = "something";
 
     test.throws(function() {
-      var pw = new xkcdPassword().initWithWordList(wordlist);
+      var pw = new XKCDPassword().initWithWordList(wordlist);
     }, Error, 'should error on a bad wordlist');
     test.throws(function() {
-      var pw = new xkcdPassword().initWithWordFile([]);
+      var pw = new XKCDPassword().initWithWordFile([]);
     }, Error, 'should error on a bad wordfile');
 
     test.done();
@@ -245,8 +244,8 @@ exports.xkcdpass = {
       'two',
       'three'
     ];
-    
-    var pw = new xkcdPassword().initWithWordList(wordList);
+
+    var pw = new XKCDPassword().initWithWordList(wordList);
     pw.generate({numWords: 4}, function(err, result) {
       test.ok(err, 'should see an error message on asking for too many words.');
 
@@ -258,7 +257,7 @@ exports.xkcdpass = {
 
           pw.generate({numWords: 4, maxLength: 1}, function(err, result) {
             test.ok(err, 'should see an error on a very small max length');
-            
+
             pw.generate({minLength: 10, maxLength: 9}, function(err, result) {
               test.ok(err, 'should see an error when max is less than min');
               test.done();
@@ -276,8 +275,8 @@ exports.xkcdpass = {
       'two',
       'three'
     ];
-    
-    var pw = new xkcdPassword().initWithWordList(wordList);
+
+    var pw = new XKCDPassword().initWithWordList(wordList);
     pw.generate({numWords: 4}).catch(function(err) {
       test.ok(err, 'should see an error message on asking for too many words.');
 
@@ -314,7 +313,7 @@ exports.xkcdpass = {
       maxLength: 10
     };
 
-    var pw = new xkcdPassword().initWithWordList(wordlist);
+    var pw = new XKCDPassword().initWithWordList(wordlist);
     pw.generate(options, function(err, result) {
       var difference = _.difference(wordlist, result);
       test.ok(difference.length === 0, 'should use all words from wordlist');
@@ -337,7 +336,7 @@ exports.xkcdpass = {
     };
     var wordfile = path.join(__dirname, 'fixtures/wordlist.txt');
 
-    var pw = new xkcdPassword().initWithWordFile(wordfile);
+    var pw = new XKCDPassword().initWithWordFile(wordfile);
     pw.generate(options, function(err, result) {
       var difference = _.difference(wordlist, result);
       test.ok(difference.length === 0, 'should use local wordfile');
@@ -346,8 +345,8 @@ exports.xkcdpass = {
   },
   chooseSaneDefaults: function(test) {
     test.expect(1);
-    
-    var pw = new xkcdPassword();
+
+    var pw = new XKCDPassword();
     pw.generate(function (err, result) {
       test.equal(4, result.length, 'should generate four words by default');
       test.done();
@@ -355,8 +354,8 @@ exports.xkcdpass = {
   },
   promiseChooseSaneDefaults: function(test) {
     test.expect(1);
-    
-    var pw = new xkcdPassword();
+
+    var pw = new XKCDPassword();
     pw.generate().then(function(result) {
       test.equal(4, result.length, 'should generate four words by default');
       test.done();
