@@ -1,4 +1,4 @@
-# XKCD Password Generator v1.2.0 
+# XKCD Password Generator v2.0.0
 
 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password) [![Dependency Status](https://gemnasium.com/fardog/node-xkcd-password.svg)](https://gemnasium.com/fardog/node-xkcd-password)
 
@@ -24,7 +24,7 @@ This will make the `xkcd-password` command available on your path.
 
 ## Usage
 
-This can be used both as a module in another application, or when installed 
+This can be used both as a module in another application, or when installed
 globally, via a commandline application.
 
 ### CLI
@@ -101,6 +101,9 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 
 ## History
 
+- **v2.0.0**  
+Update all dependancies and require nodejs 4 and above.
+
 - **v1.2.0**  
 Replaces [nomnom][nomnom] with [minimist][minimist], and adds a custom validator for CLI options.
 
@@ -165,7 +168,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Grady Ward's Moby
 
-This project includes a wordlist taken from Grady Ward's Moby II, a list of 
+This project includes a wordlist taken from Grady Ward's Moby II, a list of
 words that has been placed in the public domain.
 
 ### License
@@ -183,4 +186,3 @@ You can verify the public domain status by contacting
 Grady Ward
 3449 Martha Ct.
 Arcata, CA  95521-4884
-
