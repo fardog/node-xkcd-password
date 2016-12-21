@@ -1,6 +1,6 @@
 {
   "name": "xkcd-password",
-  "version": "2.0.0",
+  "version": "1.2.0",
   "description": "Creates an XKCD-style password based on your parameters. Includes a CLI (xkcd-password) for your convenience, and a default wordlist. Supports both a callback-based API and Promises/A+.",
   "main": "index.js",
   "bin": {
