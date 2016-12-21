@@ -81,7 +81,7 @@ It's possible for you to ask for a very specific list of words—say, 100 two
 character passwords—which would fail if you didn't have enough words of that
 size, but your wordlist was big enough—say 1000 words. As such, loop prevention
 was added in v1.1.0. If you'd like to disable this prevention, set
-`DISABLE_LOOP_PREVENTION` `to a truth-y value.
+`DISABLE_LOOP_PREVENTION` to a truth-y value.
 
 ## Notes
 
