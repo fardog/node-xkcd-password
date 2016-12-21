@@ -1,10 +1,13 @@
-# XKCD Password Generator v2.0.0
+# XKCD Password Generator
 
 [![Build Status](https://travis-ci.org/fardog/node-xkcd-password.svg)](https://travis-ci.org/fardog/node-xkcd-password) [![Dependency Status](https://gemnasium.com/fardog/node-xkcd-password.svg)](https://gemnasium.com/fardog/node-xkcd-password)
 
-Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters. Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist. Supports both a callback-based API and [Promises/A+](http://promisesaplus.com/).
+Creates an [XKCD-style password](http://xkcd.com/936/) based on your parameters.
+Includes a CLI (`xkcd-password`) for your convenience, and a default wordlist.
+Supports both a callback-based API and [Promises/A+](http://promisesaplus.com/).
 
-> **Warning:** I am not a cryptographer, or any sort of password expert. An audit would be greatly appreciated.
+> **Warning:** I am not a cryptographer, or any sort of password expert. An
+> audit would be greatly appreciated.
 
 ## Installation
 
@@ -46,51 +49,53 @@ Options:
 ### Module
 
 ```js
-var xkcdPassword = require('xkcd-password');
-var pw = new xkcdPassword();
+var xkcdPassword = require('xkcd-password')
+var pw = new xkcdPassword()
 
 var options = {
   numWords: 4,
   minLength: 5,
   maxLength: 8
-};
+}
 
 // using callbacks
-pw.generate(options, function(err, result) {
-  console.log(result); // ['distome', 'pantries', 'sending', 'weiner']
-});
+pw.generate(options, function (err, result) {
+  console.log(result)  // ['distome', 'pantries', 'sending', 'weiner']
+})
 
 
 // or, with promises
-pw.generate(options).then(function(result) {
-  console.log(result); // [ 'crambo', 'piled', 'procural', 'plunk' ]
+pw.generate(options).then(function (result) {
+  console.log(result) // [ 'crambo', 'piled', 'procural', 'plunk' ]
 }).catch(function(err) {
   if (!err) {
-    console.log('No errors here!');
+    console.log('No errors here!')
   }
-});
+})
 ```
 
 ## Environment Variables
 
 - **DISABLE_LOOP_PREVENTION**  
-It's possible for you to ask for a very specific list of words—say, 100 two character passwords—which would fail if you didn't have enough words of that size, but your wordlist was big enough—say 1000 words. As such, loop prevention was added in v1.1.0. If you'd like to disable this prevention, set DISABLE_LOOP_PREVENTION to a truth-y value.
-
-*Internally, we use [random-lib][randomlib] for our random number generator, which uses the following environment variables:*
-
-- **RAND_ALLOW_PRNG**  
-Set this environment variable to allow fallback to Node's `crypto.pseudoRandomBytes()` function if we fail to get entropy from `crypto.randomBytes()`. This decreases the quality of the random numbers, but will stop us from throwing an error.
-
-- **RAND_BUFFER_SIZE**  
-How many bytes of entropy we create in a single go. Internally, we create a buffer of entropy and then use it until it's exhausted, then refill the buffer. A small buffer exhausts more quickly, but generates faster and uses less memory. Default is 512 bytes. This value cannot be less than 256 bytes.
+It's possible for you to ask for a very specific list of words—say, 100 two
+character passwords—which would fail if you didn't have enough words of that
+size, but your wordlist was big enough—say 1000 words. As such, loop prevention
+was added in v1.1.0. If you'd like to disable this prevention, set
+`DISABLE_LOOP_PREVENTION` to a truth-y value.
 
 ## Notes
 
-- The CLI will set the minimum word length to 1 if the maximum word length requested is below the default minimum word length (5), and the minimum is not set. This is as of version 1.2.0. This is to simplify asking for very small words from the CLI. This does not apply to using the module in your applications, just the CLI.
+- The CLI will set the minimum word length to 1 if the maximum word length
+  requested is below the default minimum word length (5), and the minimum is not
+  set. This is as of version 1.2.0. This is to simplify asking for very small
+  words from the CLI. This does not apply to using the module in your
+  applications, just the CLI.
 
 ## Known Bugs
 
-- Trying to generate more a large number of words in a single `generate()` call may overflow the call stack. You'll usually be fine up to 2500 words though so it's not much of a problem.
+- Trying to generate more a large number of words in a single `generate()` call
+  may overflow the call stack. You'll usually be fine up to 2500 words though so
+  it's not much of a problem.
 
 ## Contributing
 
@@ -102,16 +107,22 @@ Feel free to send pull requests! I'm not picky, but would like the following:
 ## History
 
 - **v2.0.0**  
-Update all dependancies and require nodejs 4 and above.
+Update all dependencies and require Node.js 4 and above. — _[@cabbiepete][]_  
+Updates to [standard](http://standardjs.com) style. — _[@fardog][]_  
+Move tests to [tape](https://www.npmjs.com/package/tape). — _[@fardog][]_  
+Allow use without the `new` keyword. — _[@fardog][]_
 
 - **v1.2.0**  
-Replaces [nomnom][nomnom] with [minimist][minimist], and adds a custom validator for CLI options.
+Replaces [nomnom][nomnom] with [minimist][minimist], and adds a custom validator
+for CLI options.
 
 - **v1.1.1**  
 Updates dependencies and internal documentation. Adds dependency badge.
 
 - **v1.1.0**  
-Doesn't use promises unless you haven't specified a callback. Prevents the generator from entering an infinite loop. Adds additional checks on minimum and maximum word length options.
+Doesn't use promises unless you haven't specified a callback. Prevents the
+generator from entering an infinite loop. Adds additional checks on minimum and
+maximum word length options.
 
 - **v1.0.0**  
 API now supports Promises as well as callbacks.
@@ -120,30 +131,37 @@ API now supports Promises as well as callbacks.
 Updates to the latest version of [random-lib][randomlib] and debug.
 
 - **v0.2.6**  
-Updates to the latest version of [async][async], so that xkcd-password and [random-lib][randomlib] use the same version.
+Updates to the latest version of [async][async], so that xkcd-password
+and [random-lib][randomlib] use the same version.
 
 - **v0.2.5**  
 Additional tests.
 
 - **v0.2.4**  
-Avoids [releasing Zalgo](http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony) on errors.
+Avoids [releasing Zalgo][zalgo] on errors.
 
 - **v0.2.3**  
-Smarter rewrite of word generation function based on additional functionality that [random-lib][randomlib] provides. Additional tests.
+Smarter rewrite of word generation function based on additional functionality
+that [random-lib][randomlib] provides. Additional tests.
 
 - **v0.2.2**  
 Now uses my [random-lib][randomlib] wrapper for `crypto.randomBytes()`.
 
 - **v0.2.1**  
-Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random() in most cases.
+Now uses Node's `crypto.randomBytes()` for its PRNG, rather than Math.random()
+in most cases.
 
 - **v0.2.0**  
-Changes generation function to accept an "options" object rather than discrete parameters to the generate function. Provides defaults if options aren't given.
+Changes generation function to accept an "options" object rather than discrete
+parameters to the generate function. Provides defaults if options aren't given.
 
 [async]: http://github.com/caolan/async/
 [randomlib]: http://www.npmjs.org/package/random-lib/
 [nomnom]: https://www.npmjs.org/package/nomnom
 [minimist]: https://www.npmjs.org/package/minimist
+[zalgo]: http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony
+[@cabbiepete]: https://github.com/cabbiepete
+[@fardog]: https://github.com/fardog
 
 ## The MIT License (MIT)
 
