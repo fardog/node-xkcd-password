@@ -4,18 +4,20 @@
   "description": "Creates an XKCD-style password based on your parameters. Includes a CLI (xkcd-password) for your convenience, and a default wordlist. Supports both a callback-based API and Promises/A+.",
   "main": "index.js",
   "bin": {
-    "xkcd-password": "./bin/xkcd-password"
+    "xkcd-password": "./bin/xkcd-password.js"
   },
   "scripts": {
     "test": "tape test/*.js && npm run lint",
-    "lint": "standard **/*.js"
+    "lint": "npm run prettier-validate && npm run eslint",
+    "prettier-validate": "prettier --list-different **/*.js",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/fardog/node-xkcd-password.git"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "keywords": [
     "password",
@@ -37,8 +39,13 @@
     "when": "^3.4.5"
   },
   "devDependencies": {
-    "standard": "^8.6.0",
+    "eslint": "^5.2.0",
+    "eslint-config-prettier": "^2.9.0",
+    "prettier": "^1.13.7",
     "tape": "^4.6.3",
     "underscore": "^1.6.0"
+  },
+  "prettier": {
+    "semi": false
   }
 }
