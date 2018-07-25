@@ -262,6 +262,7 @@ XKCDPassword.prototype._generate = function(
     // because we want to generate unique numbers
     rand.randomInts(
       { unique: true, num: numWords, min: 0, max: self.wordlist.length },
+      // eslint-disable-next-line no-shadow
       function generateWords(err, ints) {
         if (err) {
           next(err)
@@ -283,6 +284,7 @@ XKCDPassword.prototype._generate = function(
             ) {
               rand.randomInt(
                 { min: 0, max: self.wordlist.length - 1 },
+                // eslint-disable-next-line no-shadow
                 function generateAnotherInt(err, int) {
                   if (err) return callback(err)
 
@@ -315,6 +317,7 @@ XKCDPassword.prototype._generate = function(
             }
             return words.length < numWords
           },
+          // eslint-disable-next-line no-shadow
           function resolveGeneration(err) {
             if (err) {
               next(err)

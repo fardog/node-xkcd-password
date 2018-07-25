@@ -4,7 +4,7 @@
   "description": "Creates an XKCD-style password based on your parameters. Includes a CLI (xkcd-password) for your convenience, and a default wordlist. Supports both a callback-based API and Promises/A+.",
   "main": "index.js",
   "bin": {
-    "xkcd-password": "./bin/xkcd-password"
+    "xkcd-password": "./bin/xkcd-password.js"
   },
   "scripts": {
     "test": "tape test/*.js && npm run lint",
