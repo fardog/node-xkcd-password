@@ -7,13 +7,13 @@
  * @version 2.0.0
  * @extends EventEmitter
  */
-var fs = require('fs')
-var path = require('path')
-var util = require('util')
-var events = require('events')
-var async = require('async')
-var rand = require('random-lib')
-var when = require('when')
+var fs = require("fs")
+var path = require("path")
+var util = require("util")
+var events = require("events")
+var async = require("async")
+var rand = require("random-lib")
+var when = require("when")
 
 var DEFAULTS = {
   numWords: 4,
@@ -31,7 +31,7 @@ module.exports = XKCDPassword
  *
  * @returns {Generator} the word generator
  */
-function XKCDPassword () {
+function XKCDPassword() {
   if (!(this instanceof XKCDPassword)) return new XKCDPassword()
 
   var self = this
@@ -59,17 +59,17 @@ util.inherits(XKCDPassword, events.EventEmitter)
  *
  * @returns {Generator} the word generator
  */
-XKCDPassword.prototype.initWithWordList = function (wordlist) {
+XKCDPassword.prototype.initWithWordList = function(wordlist) {
   var self = this
 
   // verify that the wordlist is an appropriate object
-  if (typeof wordlist === 'object' && wordlist.length > 0) {
+  if (typeof wordlist === "object" && wordlist.length > 0) {
     self.wordlist = wordlist
     self.ready = true
 
     return self
   } else {
-    throw new Error('Wordlist provided was not an array.')
+    throw new Error("Wordlist provided was not an array.")
   }
 }
 
@@ -81,7 +81,7 @@ XKCDPassword.prototype.initWithWordList = function (wordlist) {
  *
  * @emits {Generator} 'ready' event
  */
-XKCDPassword.prototype._initialize = function () {
+XKCDPassword.prototype._initialize = function() {
   var self = this
 
   self.initialized = true
@@ -90,22 +90,25 @@ XKCDPassword.prototype._initialize = function () {
   if (!self.wordlist) {
     if (!self.wordfile) {
       // use internal wordlist
-      self.wordfile = path.join(__dirname, './vendor/mwords/113809of.fic')
+      self.wordfile = path.join(__dirname, "./vendor/mwords/113809of.fic")
     }
 
     // perform our file reading asynchronously, then call the _generate function
     self.wordlist = []
-    require('readline').createInterface({
-      input: fs.createReadStream(self.wordfile),
-      terminal: false
-    }).on('line', function readWordFileLine (line) {
-      // append to internal wordlist
-      self.wordlist.push(line)
-    }).on('close', function resolveReadOfWordFile () {
-      // emit that we're ready, and call the next function
-      self.ready = true
-      self.emit('ready', self)
-    })
+    require("readline")
+      .createInterface({
+        input: fs.createReadStream(self.wordfile),
+        terminal: false
+      })
+      .on("line", function readWordFileLine(line) {
+        // append to internal wordlist
+        self.wordlist.push(line)
+      })
+      .on("close", function resolveReadOfWordFile() {
+        // emit that we're ready, and call the next function
+        self.ready = true
+        self.emit("ready", self)
+      })
   }
 }
 
@@ -117,11 +120,11 @@ XKCDPassword.prototype._initialize = function () {
  *
  * @returns {Generator} the word generator
  */
-XKCDPassword.prototype.initWithWordFile = function (wordfile) {
+XKCDPassword.prototype.initWithWordFile = function(wordfile) {
   var self = this
 
-  if (typeof wordfile !== 'string') {
-    throw new Error('Wordfile provided was not a string.')
+  if (typeof wordfile !== "string") {
+    throw new Error("Wordfile provided was not a string.")
   } else {
     self.wordfile = wordfile
 
@@ -140,7 +143,7 @@ XKCDPassword.prototype.initWithWordFile = function (wordfile) {
  *
  * @returns {Promise} the promise object
  */
-XKCDPassword.prototype.generate = function (options, next) {
+XKCDPassword.prototype.generate = function(options, next) {
   var self = this
 
   var numWords = DEFAULTS.numWords
@@ -149,32 +152,32 @@ XKCDPassword.prototype.generate = function (options, next) {
 
   var deferred = null
 
-  if (typeof options === 'number') {
+  if (typeof options === "number") {
     numWords = options
-  } else if (typeof options === 'function') {
+  } else if (typeof options === "function") {
     next = options
     options = DEFAULTS
-  } else if (typeof options !== 'undefined' && options) {
-    if (typeof options.numWords === 'number') {
+  } else if (typeof options !== "undefined" && options) {
+    if (typeof options.numWords === "number") {
       numWords = options.numWords
     }
-    if (typeof options.minLength === 'number') {
+    if (typeof options.minLength === "number") {
       minLength = options.minLength
     }
-    if (typeof options.maxLength === 'number') {
+    if (typeof options.maxLength === "number") {
       maxLength = options.maxLength
     }
   }
 
-  if (!next || typeof next !== 'function') {
-    next = function () {}
+  if (!next || typeof next !== "function") {
+    next = function() {}
     deferred = when.defer()
   }
 
   if (self.ready) {
     self._generate(numWords, minLength, maxLength, next, deferred)
   } else {
-    self.on('ready', function onReadyGenerate () {
+    self.on("ready", function onReadyGenerate() {
       self._generate(numWords, minLength, maxLength, next, deferred)
     })
 
@@ -184,7 +187,7 @@ XKCDPassword.prototype.generate = function (options, next) {
     }
   }
 
-  return (deferred ? deferred.promise : null)
+  return deferred ? deferred.promise : null
 }
 
 /**
@@ -208,7 +211,13 @@ XKCDPassword.prototype.generate = function (options, next) {
  * @param {Object} deferred - The promise to resolve, or none
  *  generation.
  */
-XKCDPassword.prototype._generate = function (numWords, minLength, maxLength, next, deferred) {
+XKCDPassword.prototype._generate = function(
+  numWords,
+  minLength,
+  maxLength,
+  next,
+  deferred
+) {
   var self = this
 
   numWords = parseInt(numWords, 10)
@@ -219,8 +228,8 @@ XKCDPassword.prototype._generate = function (numWords, minLength, maxLength, nex
 
   // ensure that required parameters have been set
   if (numWords <= 0 || minLength < 0 || maxLength < 2) {
-    err = new Error('Parameters provided were not correct.')
-    process.nextTick(function resolveParametersError () {
+    err = new Error("Parameters provided were not correct.")
+    process.nextTick(function resolveParametersError() {
       next(err)
       if (deferred) {
         deferred.reject(err)
@@ -228,8 +237,10 @@ XKCDPassword.prototype._generate = function (numWords, minLength, maxLength, nex
     })
   } else if (numWords > self.wordlist.length) {
     // make sure we're not asking for more unique words than we have available
-    err = new Error('More words than were available in the wordlist were requested.')
-    process.nextTick(function resolveTooManyWordsError () {
+    err = new Error(
+      "More words than were available in the wordlist were requested."
+    )
+    process.nextTick(function resolveTooManyWordsError() {
       next(err)
       if (deferred) {
         deferred.reject(err)
@@ -237,10 +248,10 @@ XKCDPassword.prototype._generate = function (numWords, minLength, maxLength, nex
     })
   } else if (maxLength < minLength) {
     err = new Error(
-      'Your maximum word length can\'t be less than your minimum length. ' +
-      'Try specifying a maximum length and minimum length directly.'
+      "Your maximum word length can't be less than your minimum length. " +
+        "Try specifying a maximum length and minimum length directly."
     )
-    process.nextTick(function resolveMaxLengthIncorrectError () {
+    process.nextTick(function resolveMaxLengthIncorrectError() {
       next(err)
       if (deferred) {
         deferred.reject(err)
@@ -249,72 +260,86 @@ XKCDPassword.prototype._generate = function (numWords, minLength, maxLength, nex
   } else {
     // generate the numbers
     // because we want to generate unique numbers
-    rand.randomInts({unique: true, num: numWords, min: 0, max: self.wordlist.length}, function generateWords (err, ints) {
-      if (err) {
-        next(err)
-        if (deferred) {
-          deferred.reject(err)
-        }
-        return
-      }
-      var position = 0
-      var numLoops = 0
-      var words = []
-
-      async.doWhilst(function generateWord (callback) {
-        // if the word is too short, we need a new random number
-        if (self.wordlist[ints[position]].length > maxLength || self.wordlist[ints[position]].length < minLength) {
-          rand.randomInt({min: 0, max: self.wordlist.length - 1}, function generateAnotherInt (err, int) {
-            if (err) return callback(err)
-
-            if (ints.indexOf(int) > -1) {
-              // we already found that random number, run callback to make the loop again
-              callback()
-            } else {
-              // replace the integer in that position and run the loop again
-              ints[position] = int
-              callback()
-            }
-          })
-        } else {
-          // it's a good word, push it onto the stack
-          words.push(self.wordlist[ints[position]])
-          position++
-          callback()
-        }
-      },
-      function postCheckGeneration () {
-        if (!process.env.DISABLE_LOOP_PREVENTION) {
-          if (numLoops > ((numWords * 10000) > 850000 ? 850000 : (numWords * 10000))) {
-            return false
-          }
-          numLoops++
-        }
-        return words.length < numWords
-      },
-      function resolveGeneration (err) {
+    rand.randomInts(
+      { unique: true, num: numWords, min: 0, max: self.wordlist.length },
+      function generateWords(err, ints) {
         if (err) {
           next(err)
           if (deferred) {
             deferred.reject(err)
           }
-        } else if (words.length < numWords) {
-          var tooFewWordsError = new Error(
-            'You asked for more words than could be generated. This may ' +
-            'because you\'re asking for too many words of a certain length.'
-          )
-
-          next(tooFewWordsError)
-          if (deferred) {
-            deferred.reject(tooFewWordsError)
-          }
-        } else {
-          next(null, words)
-          if (deferred) {
-            deferred.resolve(words)
-          }
+          return
         }
-      })
-    })
+        var position = 0
+        var numLoops = 0
+        var words = []
+
+        async.doWhilst(
+          function generateWord(callback) {
+            // if the word is too short, we need a new random number
+            if (
+              self.wordlist[ints[position]].length > maxLength ||
+              self.wordlist[ints[position]].length < minLength
+            ) {
+              rand.randomInt(
+                { min: 0, max: self.wordlist.length - 1 },
+                function generateAnotherInt(err, int) {
+                  if (err) return callback(err)
+
+                  if (ints.indexOf(int) > -1) {
+                    // we already found that random number, run callback to make the loop again
+                    callback()
+                  } else {
+                    // replace the integer in that position and run the loop again
+                    ints[position] = int
+                    callback()
+                  }
+                }
+              )
+            } else {
+              // it's a good word, push it onto the stack
+              words.push(self.wordlist[ints[position]])
+              position++
+              callback()
+            }
+          },
+          function postCheckGeneration() {
+            if (!process.env.DISABLE_LOOP_PREVENTION) {
+              if (
+                numLoops >
+                (numWords * 10000 > 850000 ? 850000 : numWords * 10000)
+              ) {
+                return false
+              }
+              numLoops++
+            }
+            return words.length < numWords
+          },
+          function resolveGeneration(err) {
+            if (err) {
+              next(err)
+              if (deferred) {
+                deferred.reject(err)
+              }
+            } else if (words.length < numWords) {
+              var tooFewWordsError = new Error(
+                "You asked for more words than could be generated. This may " +
+                  "because you're asking for too many words of a certain length."
+              )
+
+              next(tooFewWordsError)
+              if (deferred) {
+                deferred.reject(tooFewWordsError)
+              }
+            } else {
+              next(null, words)
+              if (deferred) {
+                deferred.resolve(words)
+              }
+            }
+          }
+        )
+      }
+    )
   }
 }

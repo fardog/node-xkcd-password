@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "tape test/*.js && npm run lint",
-    "lint": "standard **/*.js"
+    "lint": "npm run prettier-validate && npm run eslint",
+    "prettier-validate": "prettier --list-different **/*.js",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -37,8 +39,13 @@
     "when": "^3.4.5"
   },
   "devDependencies": {
-    "standard": "^8.6.0",
+    "eslint": "^5.2.0",
+    "eslint-config-prettier": "^2.9.0",
+    "prettier": "^1.13.7",
     "tape": "^4.6.3",
     "underscore": "^1.6.0"
+  },
+  "prettier": {
+    "semi": false
   }
 }
