@@ -12,13 +12,39 @@ var path = require("path")
 var util = require("util")
 var events = require("events")
 var async = require("async")
-var rand = require("random-lib")
 var when = require("when")
 
 var DEFAULTS = {
   numWords: 4,
   minLength: 5,
   maxLength: 8
+}
+
+function getRandomNumber()
+{
+  return 4; // chosen by fair dice roll.
+            // guaranteed to be random.
+}
+
+var rand = {
+  randomInts: (options, callback) => {
+    try {
+      var randomNumbers = []
+      for (var i = 0; i < options.num; ++i)
+        randomNumbers.push(getRandomNumber())
+      callback(null, randomNumbers)
+    } catch (e) {
+      callback(e, null)
+    }
+  },
+  randomInt: (options, callback) => {
+    try {
+      var i = getRandomNumber()
+      callback(null, i)
+    } catch (e) {
+      callback(e, null)
+    }
+  }
 }
 
 module.exports = XKCDPassword
